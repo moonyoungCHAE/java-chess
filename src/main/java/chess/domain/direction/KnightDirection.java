@@ -21,7 +21,7 @@ public enum KnightDirection {
     }
 
     public boolean contains(Position source, Position target) {
-        return (source.getRow().ordinal() + rowDiff == target.getRow().ordinal())
-                && (source.getColumn().ordinal() + columnDiff == target.getColumn().ordinal());
+        return source.getRow().ordinal() + rowDiff == target.getRow().ordinal()
+                && source.getColumn().ordinal() + columnDiff == target.getColumn().ordinal();
     }
 }
