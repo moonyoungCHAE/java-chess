@@ -43,6 +43,7 @@ public abstract class Piece extends Square {
     public boolean movable(Position from, Position to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
+
         return hasDirection(Direction.getDirection(from, to))
                 && validateMovableTileSize(from, to);
     }
