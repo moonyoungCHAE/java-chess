@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DirectionTest {
 
-    @DisplayName("Position source, target으로 어떤 방향 이동인지 확인")
+    @DisplayName("Position source와 target으로 이동 방향 확인")
     @ParameterizedTest
     @MethodSource("generatePositionsAndMoveRule")
     void 방향찾기(String sourceInput, String targetInput, Direction direction) {
@@ -37,14 +37,14 @@ public class DirectionTest {
                 Arguments.of("a1", "h8", Direction.DIAGONAL_TOP_RIGHT));
     }
 
-    @DisplayName( "top/down 방향 이동 시, Postition source와 target 사이의 position 확인")
+    @DisplayName( "Postition source와 target 사이의 route: top, down")
     @ParameterizedTest
     @MethodSource("generateTopDownPositions")
     void topDownTest(String sourceInput, String targetValue, Direction direction) {
         Position source = Positions.of(sourceInput);
         Position target = Positions.of(targetValue);
 
-        List<Position> actual = direction.getPositionsBetween(source, target);
+        List<Position> actual = direction.getRoutes(source, target);
 
         Position[] expected = {Positions.of(Row.A, Column.TWO),
                 Positions.of(Row.A, Column.THREE),
@@ -62,14 +62,14 @@ public class DirectionTest {
                 Arguments.of("a8", "a1", Direction.DOWN));
     }
 
-    @DisplayName( "left/right 방향 이동 시, Postition source와 target 사이의 position 확인")
+    @DisplayName( "Postition source와 target 사이의 routes: left, right")
     @ParameterizedTest
     @MethodSource("generateLeftRightPositions")
     void leftRightTest(String sourceInput, String targetValue, Direction direction) {
         Position source = Positions.of(sourceInput);
         Position target = Positions.of(targetValue);
 
-        List<Position> actual = direction.getPositionsBetween(source, target);
+        List<Position> actual = direction.getRoutes(source, target);
 
         Position[] expected = {Positions.of(Row.B, Column.ONE),
                 Positions.of(Row.C, Column.ONE),
@@ -87,14 +87,14 @@ public class DirectionTest {
                 Arguments.of("h1", "a1", Direction.RIGHT));
     }
 
-    @DisplayName( "'\' 대각선 방향 이동 시, Postition source와 target 사이의 position 확인")
+    @DisplayName( "Postition source와 target 사이의 routes: '\' 대각선")
     @ParameterizedTest
     @MethodSource("generateTopLeftDownRightPositions")
     void diagonalTopLeftDownRightTest(String sourceInput, String targetValue, Direction direction) {
         Position source = Positions.of(sourceInput);
         Position target = Positions.of(targetValue);
 
-        List<Position> actual = direction.getPositionsBetween(source, target);
+        List<Position> actual = direction.getRoutes(source, target);
 
         Position[] expected = {Positions.of(Row.B, Column.TWO),
                 Positions.of(Row.C, Column.THREE),
@@ -112,14 +112,14 @@ public class DirectionTest {
                 Arguments.of("h8", "a1", Direction.DIAGONAL_DOWN_LEFT));
     }
 
-    @DisplayName( "'/' 대각선 방향 이동 시, Postition source와 target 사이의 position 확인")
+    @DisplayName( "Postition source와 target 사이의 routes: / 대각선")
     @ParameterizedTest
     @MethodSource("generateTopRightDownLeftPositions")
     void diagonalTopRightDownLeftTest(String sourceInput, String targetValue, Direction direction) {
         Position source = Positions.of(sourceInput);
         Position target = Positions.of(targetValue);
 
-        List<Position> actual = direction.getPositionsBetween(source, target);
+        List<Position> actual = direction.getRoutes(source, target);
 
         Position[] expected = {Positions.of(Row.B, Column.TWO),
                 Positions.of(Row.C, Column.THREE),
