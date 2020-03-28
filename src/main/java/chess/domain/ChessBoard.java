@@ -1,9 +1,10 @@
 package chess.domain;
 
 import chess.Exceptions.NotMoveException;
-import chess.PieceInitPositionFactory;
+import chess.ChessInitData;
 import chess.domain.chesspieces.*;
 import chess.domain.direction.Direction;
+import chess.domain.routes.RoutesFinder;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Row;
@@ -14,12 +15,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
-    private final static Map<Position, Square> chessBoard = new LinkedHashMap<>();
+    private final Map<Position, Square> chessBoard = new LinkedHashMap<>();
     private boolean isKingTaken;
 
     public ChessBoard() {
         Positions.getValues().forEach(position -> chessBoard.put(position, Empty.getInstance()));
-        for (Map.Entry<Piece, List<Position>> entry : PieceInitPositionFactory.create().entrySet()) {
+        for (Map.Entry<Piece, List<Position>> entry : ChessInitData.create().entrySet()) {
             entry.getValue().forEach(position -> chessBoard.put(position, entry.getKey()));
         }
         isKingTaken = false;
@@ -33,7 +34,7 @@ public class ChessBoard {
         Square source = chessBoard.get(from);
         Square target = chessBoard.get(to);
         if (source.movable(from, to)
-                && validateObstacles(getRoutes(from, to))
+                && validateObstacles(findRoutes(from, to))
                 && !source.isSamePlayer(target)
                 && validatePawnException(source, target, Direction.getDirection(from, to))) {
             chessBoard.put(to, source);
@@ -85,9 +86,9 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    private List<Position> getRoutes(Position from, Position to) {
+    private List<Position> findRoutes(Position from, Position to) {
         Direction direction = Direction.getDirection(from, to);
-        return direction.getPositionsBetween(from, to);
+        return RoutesFinder.findRoutes(direction, from, to);
     }
 
     public Status createStatus(Player player) {

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PieceInitPositionFactory {
+public class ChessInitData {
     private static Map<Piece, List<Position>> initPositions = new LinkedHashMap<>();
     static {
         Player blackPlayer = Player.BLACK;
@@ -47,5 +47,4 @@ public class PieceInitPositionFactory {
     public static Map<Piece, List<Position>> create() {
         return initPositions;
     }
-
 }

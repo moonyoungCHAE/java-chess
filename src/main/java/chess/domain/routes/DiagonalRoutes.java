@@ -1,5 +1,6 @@
-package chess.domain.direction;
+package chess.domain.routes;
 
+import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Column;
@@ -8,11 +9,15 @@ import chess.domain.position.component.Row;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
 
-public class DiagonalPositionBetween implements BiFunction<Position, Position, List<Position>> {
+public class DiagonalRoutes implements Routes {
+    private static final List<Direction> directions = Arrays.asList(Direction.DIAGONAL_TOP_RIGHT,
+            Direction.DIAGONAL_TOP_LEFT,
+            Direction.DIAGONAL_DOWN_RIGHT,
+            Direction.DIAGONAL_DOWN_LEFT);
+
     @Override
-    public List<Position> apply(Position from, Position to) {
+    public List<Position> findRoutes(Position from, Position to) {
         Column smallerColumn = Column.getSmaller(from.getColumn(), to.getColumn());
         Column biggerColumn = Column.getBigger(from.getColumn(), to.getColumn());
         Row smallerRow = Row.getSmaller(from.getRow(), to.getRow());
@@ -28,5 +33,10 @@ public class DiagonalPositionBetween implements BiFunction<Position, Position, L
             positions.add(Positions.of(rows.get(i), columns.get(i)));
         }
         return positions;
+    }
+
+    @Override
+    public boolean hasDirection(Direction direction) {
+        return directions.contains(direction);
     }
 }

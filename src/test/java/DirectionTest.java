@@ -1,4 +1,5 @@
 import chess.domain.direction.Direction;
+import chess.domain.routes.RoutesFinder;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Column;
@@ -41,10 +42,10 @@ public class DirectionTest {
     @ParameterizedTest
     @MethodSource("generateTopDownPositions")
     void topDownTest(String sourceInput, String targetValue, Direction direction) {
-        Position source = Positions.of(sourceInput);
-        Position target = Positions.of(targetValue);
+        Position from = Positions.of(sourceInput);
+        Position to = Positions.of(targetValue);
 
-        List<Position> actual = direction.getRoutes(source, target);
+        List<Position> actual = RoutesFinder.findRoutes(direction, from, to);
 
         Position[] expected = {Positions.of(Row.A, Column.TWO),
                 Positions.of(Row.A, Column.THREE),
@@ -66,11 +67,14 @@ public class DirectionTest {
     @ParameterizedTest
     @MethodSource("generateLeftRightPositions")
     void leftRightTest(String sourceInput, String targetValue, Direction direction) {
-        Position source = Positions.of(sourceInput);
-        Position target = Positions.of(targetValue);
+        Position from = Positions.of(sourceInput);
+        Position to = Positions.of(targetValue);
 
-        List<Position> actual = direction.getRoutes(source, target);
-
+        List<Position> actual = RoutesFinder.findRoutes(direction, from, to);
+        System.out.println("size: "+actual.size());
+        for (Position position : actual) {
+            System.out.println(position.getRow().getValue() + position.getColumn().getValue());
+        }
         Position[] expected = {Positions.of(Row.B, Column.ONE),
                 Positions.of(Row.C, Column.ONE),
                 Positions.of(Row.D, Column.ONE),
@@ -91,10 +95,10 @@ public class DirectionTest {
     @ParameterizedTest
     @MethodSource("generateTopLeftDownRightPositions")
     void diagonalTopLeftDownRightTest(String sourceInput, String targetValue, Direction direction) {
-        Position source = Positions.of(sourceInput);
-        Position target = Positions.of(targetValue);
+        Position from = Positions.of(sourceInput);
+        Position to = Positions.of(targetValue);
 
-        List<Position> actual = direction.getRoutes(source, target);
+        List<Position> actual = RoutesFinder.findRoutes(direction, from, to);
 
         Position[] expected = {Positions.of(Row.B, Column.TWO),
                 Positions.of(Row.C, Column.THREE),
@@ -116,10 +120,10 @@ public class DirectionTest {
     @ParameterizedTest
     @MethodSource("generateTopRightDownLeftPositions")
     void diagonalTopRightDownLeftTest(String sourceInput, String targetValue, Direction direction) {
-        Position source = Positions.of(sourceInput);
-        Position target = Positions.of(targetValue);
+        Position from = Positions.of(sourceInput);
+        Position to = Positions.of(targetValue);
 
-        List<Position> actual = direction.getRoutes(source, target);
+        List<Position> actual = RoutesFinder.findRoutes(direction, from, to);
 
         Position[] expected = {Positions.of(Row.B, Column.TWO),
                 Positions.of(Row.C, Column.THREE),

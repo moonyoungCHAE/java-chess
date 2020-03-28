@@ -6,34 +6,22 @@ import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
 public enum Direction {
-    LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isZero(columnDiff),
-            new LeftRightPositionBetween()),
-    RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isZero(columnDiff),
-            new LeftRightPositionBetween()),
-    TOP((rowDiff, columnDiff) -> isZero(rowDiff) && isNegative(columnDiff),
-            new TopDownPositionBetween()),
-    DOWN((rowDiff, columnDiff) -> isZero(rowDiff) && isPositive(columnDiff),
-            new TopDownPositionBetween()),
-    DIAGONAL_TOP_LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isNegative(columnDiff),
-            new DiagonalPositionBetween()),
-    DIAGONAL_TOP_RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isNegative(columnDiff),
-            new DiagonalPositionBetween()),
-    DIAGONAL_DOWN_LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isPositive(columnDiff),
-            new DiagonalPositionBetween()),
-    DIAGONAL_DOWN_RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isPositive(columnDiff),
-            new DiagonalPositionBetween());
+    LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isZero(columnDiff)),
+    RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isZero(columnDiff)),
+    TOP((rowDiff, columnDiff) -> isZero(rowDiff) && isNegative(columnDiff)),
+    DOWN((rowDiff, columnDiff) -> isZero(rowDiff) && isPositive(columnDiff)),
+    DIAGONAL_TOP_LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isNegative(columnDiff)),
+    DIAGONAL_TOP_RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isNegative(columnDiff)),
+    DIAGONAL_DOWN_LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isPositive(columnDiff)),
+    DIAGONAL_DOWN_RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isPositive(columnDiff));
 
     private final BiPredicate<Integer, Integer> judge;
-    private final BiFunction<Position, Position, List<Position>> positionsBetween;
 
-    Direction(BiPredicate<Integer, Integer> judge, BiFunction<Position, Position, List<Position>> positionsBetween) {
+    Direction(BiPredicate<Integer, Integer> judge) {
         this.judge = judge;
-        this.positionsBetween = positionsBetween;
     }
 
     private static boolean isPositive(int number) {
@@ -52,10 +40,6 @@ public enum Direction {
         int rowDiff = Row.getDiff(from.getRow(), to.getRow());
         int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
         return judge.test(rowDiff, columnDiff);
-    }
-
-    public List<Position> getPositionsBetween(Position from, Position to) {
-        return positionsBetween.apply(from, to);
     }
 
     public static Direction getDirection(Position from, Position to) {

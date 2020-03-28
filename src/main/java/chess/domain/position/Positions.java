@@ -54,4 +54,8 @@ public class Positions {
     public static List<Position> getValues() {
         return Collections.unmodifiableList(new ArrayList<>(positions.values()));
     }
+
+    public static int getSize() {
+        return positions.size();
+    }
 }
