@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 public class Result {
     private final List<Status> statuses;
     private final List<Player> winners;
-
-
     private final boolean isDraw;
 
     public Result(List<Status> statuses) {
