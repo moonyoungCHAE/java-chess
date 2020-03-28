@@ -27,6 +27,7 @@ public enum PieceInfo {
 
     public String getName(Player player) {
         Objects.requireNonNull(player);
+
         if (player == Player.WHITE){
             return this.whiteName;
         }

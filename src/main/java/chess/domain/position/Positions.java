@@ -28,10 +28,13 @@ public class Positions {
     }
 
     public static String key(Row row, Column column) {
-        StringBuilder PositionKey = new StringBuilder();
-        PositionKey.append(row.getValue());
-        PositionKey.append(column.getValue());
-        return PositionKey.toString();
+        Objects.requireNonNull(row);
+        Objects.requireNonNull(column);
+
+        StringBuilder positionKey = new StringBuilder();
+        positionKey.append(row.getValue());
+        positionKey.append(column.getValue());
+        return positionKey.toString();
     }
 
     public static Position of(String position) {
