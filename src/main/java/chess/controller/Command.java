@@ -3,6 +3,7 @@ package chess.controller;
 import chess.Exceptions.IllegalCommandException;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public enum Command {
     START("start"),
@@ -10,15 +11,16 @@ public enum Command {
     MOVE("move"),
     STATUS("status");
 
-    private final String command;
+    private final String commandValue;
 
     Command(String command) {
-        this.command = command;
+        this.commandValue = command;
     }
 
-    public static Command of(String input) {
+    public static Command of(String commandInput) {
+        Objects.requireNonNull(commandInput);
         return Arrays.stream(values())
-                .filter(command -> command.command.equals(input))
+                .filter(command -> command.commandValue.equals(commandInput))
                 .findFirst()
                 .orElseThrow(IllegalCommandException::new);
     }

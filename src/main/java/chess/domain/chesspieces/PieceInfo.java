@@ -3,6 +3,8 @@ package chess.domain.chesspieces;
 import chess.Exceptions.IllegalPlayerException;
 import chess.domain.Player;
 
+import java.util.Objects;
+
 public enum PieceInfo {
     KING("K", "k", 0),
     QUEEN("Q", "q", 9),
@@ -24,6 +26,7 @@ public enum PieceInfo {
     }
 
     public String getName(Player player) {
+        Objects.requireNonNull(player);
         if (player == Player.WHITE){
             return this.whiteName;
         }
