@@ -25,9 +25,9 @@ public class Position {
     }
 
     public static String key(Row row, Column column) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(row.getValue());
-        stringBuffer.append(column.getValue());
-        return stringBuffer.toString();
+        StringBuilder PositionKey = new StringBuilder();
+        PositionKey.append(row.getValue());
+        PositionKey.append(column.getValue());
+        return PositionKey.toString();
     }
 }
