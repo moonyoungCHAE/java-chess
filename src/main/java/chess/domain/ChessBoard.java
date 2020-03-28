@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
-    private final Map<Position, Square> chessBoard = new LinkedHashMap<>();
+    private final static Map<Position, Square> chessBoard = new LinkedHashMap<>();
 
     public ChessBoard() {
         Positions.getValues().forEach(position -> chessBoard.put(position, Empty.getInstance()));
