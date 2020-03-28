@@ -19,15 +19,4 @@ public class Position {
     public Column getColumn() {
         return column;
     }
-
-    public static String key(Position position) {
-        return key(position.getRow(), position.getColumn());
-    }
-
-    public static String key(Row row, Column column) {
-        StringBuilder PositionKey = new StringBuilder();
-        PositionKey.append(row.getValue());
-        PositionKey.append(column.getValue());
-        return PositionKey.toString();
-    }
 }

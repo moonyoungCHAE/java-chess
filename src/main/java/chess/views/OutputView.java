@@ -35,6 +35,7 @@ public class OutputView {
             stringBuilder.insert(0, NEW_LINE);
         }
         stringBuilder.append(NEW_LINE);
+
         System.out.println(stringBuilder.toString());
     }
 
