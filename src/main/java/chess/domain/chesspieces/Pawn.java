@@ -1,5 +1,6 @@
 package chess.domain.chesspieces;
 
+import chess.Exceptions.NotMoveException;
 import chess.domain.Player;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
@@ -53,7 +54,6 @@ public class Pawn extends Piece {
         return Math.abs(rowDiff) <= AVAILABLE_ROW_MOVE_DIFF && Math.abs(columnDiff) <= availableColumnDiff;
     }
 
-    // (예외 상황) 대각선 공격 (1) 대각선이여야 하고, (2) 같은 편이 아니여야 한다.
     public boolean validateAttack(Square target, Direction direction) {
         if (target.getClass() == Empty.class) {
             return false;
@@ -62,14 +62,10 @@ public class Pawn extends Piece {
         if (attackDirections.contains(direction)) {
             return !isSamePlayer(target);
         }
-        return true;
+        throw new NotMoveException("잘못된 이동입니다.");
     }
 
-    // (예외 상황) 전진일 때 empty여야 한다.
     public boolean validateMoveForward(Square target, Direction direction) {
-        if (direction == forwardDirection) {
-            return target.getClass() == Empty.class;
-        }
-        return true;
+        return direction == forwardDirection && target.getClass() == Empty.class;
     }
 }
