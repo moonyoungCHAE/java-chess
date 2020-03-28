@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.Exceptions.NotMoveException;
 import chess.PieceInitPositionFactory;
 import chess.domain.chesspieces.*;
 import chess.domain.direction.Direction;
@@ -24,7 +25,7 @@ public class ChessBoard {
 
     public boolean move(Position from, Position to) {
         if (from == to) {
-            throw new IllegalArgumentException("같은 위치로는 이동을 못합니다.");
+            throw new NotMoveException("같은 위치로는 이동을 못합니다.");
         }
 
         Square source = chessBoard.get(from);
@@ -69,7 +70,7 @@ public class ChessBoard {
                 .stream()
                 .mapToDouble(Piece::getScore)
                 .sum();
-        result -= PieceInfo.PAWN_DIFF * getPawnCount(player);
+        result -= PieceInfo.PAWN_SCORE_DIFF * getPawnCount(player);
         return new Status(player, result);
     }
 
